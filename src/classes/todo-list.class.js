@@ -3,7 +3,7 @@ export class TodoList {
     this.todos = [];
   }
 
-  nuevoTodo() {
+  newTodo(todo) {
     this.todos.push(todo);
   }
 
