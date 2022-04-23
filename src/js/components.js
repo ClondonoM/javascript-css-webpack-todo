@@ -1,6 +1,10 @@
+import { Todo } from "../classes";
+import { todoList } from "../index";
+
 //html references
 
 const divTodoList = document.querySelector(".todo-list");
+const txtInput = document.querySelector(".new-todo");
 
 export const createTodoHtml = (todo) => {
   const htmlTodo = `
@@ -16,6 +20,20 @@ export const createTodoHtml = (todo) => {
   const div = document.createElement("div");
   div.innerHTML = htmlTodo;
 
-  divTodoList.append(div);
-  return div;
+  divTodoList.append(div.firstElementChild);
+  return div.firstElementChild;
 };
+
+// Events
+
+txtInput.addEventListener("keyup", (evnt) => {
+  if (evnt.keyCode === 13 && txtInput.value.length > 0) {
+    //13 -> enter key
+    const newTodo = new Todo(txtInput.value);
+    todoList.newTodo(newTodo);
+    console.log(todoList);
+
+    createTodoHtml(newTodo);
+    txtInput.value = "";
+  }
+});
