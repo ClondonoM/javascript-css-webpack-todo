@@ -37,3 +37,15 @@ txtInput.addEventListener("keyup", (evnt) => {
     txtInput.value = "";
   }
 });
+
+divTodoList.addEventListener("click", (evnt) => {
+  const nameElement = evnt.target.localName;
+  const todoElement = evnt.target.parentElement.parentElement;
+  const todoId = todoElement.getAttribute("data-id");
+
+  if (nameElement.includes("input")) {
+    todoList.toggleTodo(todoId);
+    todoElement.classList.toggle("completed");
+  }
+  console.log(todoList);
+});
