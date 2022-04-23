@@ -46,6 +46,9 @@ divTodoList.addEventListener("click", (evnt) => {
   if (nameElement.includes("input")) {
     todoList.toggleTodo(todoId);
     todoElement.classList.toggle("completed");
+  } else if (nameElement.includes("button")) {
+    todoList.deleteTodo(todoId);
+    divTodoList.removeChild(todoElement);
   }
   console.log(todoList);
 });
