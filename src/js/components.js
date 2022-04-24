@@ -30,6 +30,17 @@ export const createTodoHtml = (todo) => {
 
 // Events
 
+const counterPendings = () => {
+  let numPending = 0;
+
+  for (const element of divTodoList.children) {
+    element.classList.remove("hidden");
+    const completed = element.classList.contains("completed");
+    !completed ? (numPending += 1) : numPending;
+    todoCount.innerText = numPending;
+  }
+};
+
 txtInput.addEventListener("keyup", (evnt) => {
   if (evnt.keyCode === 13 && txtInput.value.length > 0) {
     //13 -> enter key
@@ -40,14 +51,7 @@ txtInput.addEventListener("keyup", (evnt) => {
     txtInput.value = "";
   }
 
-  let numPending = 0;
-
-  for (const element of divTodoList.children) {
-    element.classList.remove("hidden");
-    const completed = element.classList.contains("completed");
-    !completed ? (numPending += 1) : numPending;
-    todoCount.innerText = numPending;
-  }
+  counterPendings();
 });
 
 divTodoList.addEventListener("click", (evnt) => {
@@ -62,7 +66,8 @@ divTodoList.addEventListener("click", (evnt) => {
     todoList.deleteTodo(todoId);
     divTodoList.removeChild(todoElement);
   }
-  console.log(todoList);
+
+  counterPendings();
 });
 
 btnDelete.addEventListener("click", () => {
