@@ -8,6 +8,7 @@ const txtInput = document.querySelector(".new-todo");
 const btnDelete = document.querySelector(".clear-completed");
 const ulFilters = document.querySelector(".filters");
 const ancFilters = document.querySelectorAll(".filter");
+const todoCount = document.querySelector("#todoCount");
 
 export const createTodoHtml = (todo) => {
   const htmlTodo = `
@@ -34,10 +35,18 @@ txtInput.addEventListener("keyup", (evnt) => {
     //13 -> enter key
     const newTodo = new Todo(txtInput.value);
     todoList.newTodo(newTodo);
-    console.log(todoList);
 
     createTodoHtml(newTodo);
     txtInput.value = "";
+  }
+
+  let numPending = 0;
+
+  for (const element of divTodoList.children) {
+    element.classList.remove("hidden");
+    const completed = element.classList.contains("completed");
+    !completed ? (numPending += 1) : numPending;
+    todoCount.innerText = numPending;
   }
 });
 
@@ -60,6 +69,7 @@ btnDelete.addEventListener("click", () => {
   todoList.deleteCompleted();
   for (let i = divTodoList.childNodes.length - 1; i >= 0; i--) {
     const element = divTodoList.childNodes[i];
+
     if (element.classList.contains("completed")) {
       divTodoList.removeChild(element);
     }
@@ -75,9 +85,13 @@ ulFilters.addEventListener("click", (e) => {
   ancFilters.forEach((elem) => elem.classList.remove("selected"));
   e.target.classList.add("selected");
 
+  let numPending = 0;
+
   for (const element of divTodoList.children) {
     element.classList.remove("hidden");
     const completed = element.classList.contains("completed");
+    !completed ? (numPending += 1) : numPending;
+    todoCount.innerText = numPending;
 
     switch (filt) {
       case "Pendings":
